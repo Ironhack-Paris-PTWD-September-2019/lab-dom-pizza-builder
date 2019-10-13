@@ -66,7 +66,7 @@ function renderGreenPeppers() {
 
 function renderWhiteSauce() {
   // Iteration 2: add/remove the class "sauce-white" of `<section class="sauce">`
-  document.querySelectorAll(".sauce-white").forEach(function($sauce) {
+  document.querySelectorAll(".sauce").forEach(function($sauce) {
     if (state.whiteSauce) {
       $sauce.className = "sauce sauce-white";
     } else {
@@ -77,7 +77,7 @@ function renderWhiteSauce() {
 
 function renderGlutenFreeCrust() {
   // Iteration 2: add/remove the class "crust-gluten-free" of `<section class="crust">`
-  document.querySelectorAll(".crust-gluten-free").forEach(function($crust) {
+  document.querySelectorAll(".crust").forEach(function($crust) {
     if (state.glutenFreeCrust) {
       $crust.className = "crust crust-gluten-free";
     } else {
