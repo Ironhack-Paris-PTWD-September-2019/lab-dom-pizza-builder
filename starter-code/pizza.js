@@ -69,10 +69,10 @@ function renderWhiteSauce() {
   // Iteration 2: add/remove the class "sauce-white" of `<section class="sauce">`
   document.querySelectorAll('.sauce').forEach(function($crust){
     if (state.whiteSauce) {
-      $crust.classList.remove("sauce-white");
+      $crust.classList.add("sauce-white");
     }
     else {
-      $crust.classList.add("sauce-white");
+      $crust.classList.remove("sauce-white");
     }
   })
 }
@@ -81,23 +81,127 @@ function renderGlutenFreeCrust() {
   // Iteration 2: add/remove the class "crust-gluten-free" of `<section class="crust">`
   document.querySelectorAll('.crust').forEach(function($crust){
     if (state.glutenFreeCrust) {
-      $crust.classList.remove("crust-gluten-free");
+      $crust.classList.add("crust-gluten-free");
     }
     else {
-      $crust.classList.add("crust-gluten-free");
+      $crust.classList.remove("crust-gluten-free");
     }
   })
 }
 
 function renderButtons() {
   // Iteration 3: add/remove the class "active" of each `<button class="btn">`
-  document.querySelectorAll('.btn').forEach(function($btn){
-    
+  [...document.querySelectorAll('.btn')].forEach(function($btn){
+    var isOnThePizza = ingredient => {
+      if($btn.className.indexOf(ingredient) !== -1) return true;
+    }
+
+    var addActiveClass = () => $btn.classList.add(`active`);
+    var removeActiveClass = () => $btn.classList.remove(`active`);
+
+    if(isOnThePizza(`btn-pepperonni`)){
+      if(!state.pepperonni){
+        removeActiveClass();
+      } else {
+        addActiveClass();
+      }
+    }
+  
+    if(isOnThePizza(`btn-mushrooms`)){
+      if(!state.mushrooms){
+        removeActiveClass();
+      } else {
+        addActiveClass();
+      }
+    }
+  
+    if(isOnThePizza(`btn-green-peppers`)){
+      if(!state.greenPeppers){
+        removeActiveClass();
+      } else {
+        addActiveClass();
+      }
+    }
+  
+    if(isOnThePizza(`btn-sauce`)){
+      if(!state.whiteSauce){
+        removeActiveClass();
+      } else {
+        addActiveClass();
+      }
+    }
+
+    if(isOnThePizza(`btn-crust`)){
+      if(!state.glutenFreeCrust){
+        removeActiveClass();
+      } else {
+        addActiveClass();
+      }
+    }
   })
 }
 
 function renderPrice() {
   // Iteration 4: change the HTML of `<aside class="panel price">`
+  var $ingredientsPriceList = [...document.querySelectorAll(`.price li`)];
+  var $pizzaPrice = document.querySelector(`.price strong`);
+  var pizzaPrice = 10;
+
+  $ingredientsPriceList.forEach(function($ingredientPriceLine){
+    var isOnThePizza = ingredient => {
+      if ($ingredientPriceLine.innerHTML.indexOf(ingredient) !== -1) return true;
+    }
+
+    var hidesIngredientLine = () => $ingredientPriceLine.style.visibility = `hidden`;
+    var showsIngredientLine = () => $ingredientPriceLine.style.visibility = `visible`;
+
+    if(isOnThePizza(`pepperonni`)) {
+      if(!state.pepperonni){
+        hidesIngredientLine();
+      } else {
+        showsIngredientLine();
+        pizzaPrice++;
+      }
+    }
+
+    if(isOnThePizza(`mushrooms`)) {
+      if(!state.mushrooms){
+        hidesIngredientLine();
+      } else {
+        showsIngredientLine();
+        pizzaPrice++;
+      }
+    }
+
+    if(isOnThePizza(`green peppers`)) {
+      if(!state.greenPeppers){
+        hidesIngredientLine();
+      } else {
+        showsIngredientLine();
+        pizzaPrice++;
+      }
+    }
+
+    if(isOnThePizza(`white sauce`)) {
+      if(!state.whiteSauce){
+        hidesIngredientLine();
+      } else {
+        showsIngredientLine();
+        pizzaPrice += 3;
+      }
+    }
+
+    if(isOnThePizza(`gluten-free crust`)) {
+      if(!state.glutenFreeCrust){
+        hidesIngredientLine();
+      } else {
+        showsIngredientLine();
+        pizzaPrice += 5;
+      }
+    }
+  })
+
+  $pizzaPrice.innerHTML = `$`+ pizzaPrice;
 }
 
 
