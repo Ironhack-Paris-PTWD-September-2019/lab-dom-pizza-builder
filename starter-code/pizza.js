@@ -86,8 +86,27 @@ function renderGlutenFreeCrust() {
   });
 }
 
+function renderButton(state, $btn) {
+  if (state) {
+    $btn.classList.add("active");
+  } else {
+    $btn.classList.remove("active");
+  }
+}
+
 function renderButtons() {
   // Iteration 3: add/remove the class "active" of each `<button class="btn">`
+  let $btnPepperonni = document.querySelector(".btn-pepperonni");
+  let $btnMushrooms = document.querySelector(".btn-mushrooms");
+  let $btnGreenPeppers = document.querySelector(".btn-green-peppers");
+  let $btnSauce = document.querySelector(".btn-sauce");
+  let $btnCrust = document.querySelector(".btn-crust");
+
+  renderButton(state.pepperonni, $btnPepperonni);
+  renderButton(state.mushrooms, $btnMushrooms);
+  renderButton(state.greenPeppers, $btnGreenPeppers);
+  renderButton(state.whiteSauce, $btnSauce);
+  renderButton(state.glutenFreeCrust, $btnCrust);
 }
 
 function renderPrice() {
