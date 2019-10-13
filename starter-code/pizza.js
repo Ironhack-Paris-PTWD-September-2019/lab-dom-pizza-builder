@@ -2,6 +2,7 @@
 
 // Constants
 var basePrice = 10;
+var totalPrice = basePrice;
 var ingredients = {
   pepperonni: { name: "Pepperonni", price: 1 },
   mushrooms: { name: "Mushrooms", price: 1 },
@@ -86,6 +87,7 @@ function renderGlutenFreeCrust() {
   });
 }
 
+// HELPER FUNCTION for BUTTONS
 function renderButton(state, $btn) {
   if (state) {
     $btn.classList.add("active");
@@ -109,8 +111,43 @@ function renderButtons() {
   renderButton(state.glutenFreeCrust, $btnCrust);
 }
 
+// HELPER FUNCTION: render a product and update the total price
+function renderProduct(state, $item, item) {
+  if (state) {
+    $item.style.textDecorationLine = "none";
+    totalPrice += item.price;
+  } else {
+    $item.style.textDecorationLine = "line-through";
+  }
+}
+
 function renderPrice() {
   // Iteration 4: change the HTML of `<aside class="panel price">`
+  let $panel = [...document.querySelectorAll(".price li")];
+  let $panelPepperonni = $panel[0];
+  let $panelMushrooms = $panel[1];
+  let $panelGreenPeppers = $panel[2];
+  let $panelSauce = $panel[3];
+  let $panelCrust = $panel[4];
+
+  // Render each product and update the total price
+  totalPrice = basePrice;
+  renderProduct(state.pepperonni, $panelPepperonni, ingredients.pepperonni);
+  renderProduct(state.mushrooms, $panelMushrooms, ingredients.mushrooms);
+  renderProduct(
+    state.greenPeppers,
+    $panelGreenPeppers,
+    ingredients.greenPeppers
+  );
+  renderProduct(state.whiteSauce, $panelSauce, ingredients.whiteSauce);
+  renderProduct(
+    state.glutenFreeCrust,
+    $panelCrust,
+    ingredients.glutenFreeCrust
+  );
+
+  // Render the total price
+  document.querySelector(".price strong").innerHTML = `$${totalPrice}`;
 }
 
 renderEverything();
